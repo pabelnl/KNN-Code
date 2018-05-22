@@ -1,0 +1,66 @@
+import numpy as np
+import jupyter as jp
+import pandas as pd
+import scipy as sp
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+data1 = pd.read_csv("Churn.csv")
+data = pd.DataFrame(data1)
+# print(data.head(5))
+# print(data.columns)
+# print(data.describe())
+# print('The number of rows and columns in the data set are\n')
+# print(data.shape)
+# print(data['total_day_minutes'].mean())
+# groupchurned = data.groupby('churned')
+# print(groupchurned['churned'].count())
+# print(groupchurned.count())
+# print(groupchurned['total_day_minutes'].count())
+# print(groupchurned['total_day_minutes'].mean())
+# print(data.describe())
+# print(data.max())
+# print(data.nunique()) #To find the number of unique values in the data set
+# m = data.mean()
+# print(m)
+# data.fillna(data.mean(),inplace=True)
+# print(data.head(100))
+
+print(data.nunique())
+col1 = ['intl_plan', 'voice_mail_plan']  #Cleaning the features binary variable
+col2 = ['number_vmail_messages', 'total_day_minutes', 'total_day_calls', 'total_day_charge', 'total_eve_minutes','total_eve_calls','total_eve_charge','total_night_minutes','total_night_calls','total_night_charge','total_intl_calls','total_intl_minutes','total_intl_charge','number_customer_service_calls']
+data1 = data[col1]
+data2 = data[col2]
+# print(data1.mean()) #To check if the statements are working
+# print(data2.mean())
+data1.fillna(data1.min(), inplace=True)
+data2.fillna(data2.mean(), inplace=True)
+X = pd.concat([data1, data2], axis=1) #Getting the features together
+Y = data['churned']
+X_train, X_test = train_test_split(X, test_size=0.3)
+Y_train, Y_test = train_test_split(Y, test_size=0.3)
+
+for i in range(1, 20):
+    knn = KNeighborsClassifier(n_neighbors=i, p=2)
+    knn.fit(X_train, Y_train)
+    y_pred = knn.predict(X_test)
+    print('The accuracy value for neighbors', i)
+    print(accuracy_score(Y_test, y_pred))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
