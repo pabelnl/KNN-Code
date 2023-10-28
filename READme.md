@@ -2,6 +2,7 @@ Change in branch First FILE
 <<<<<<< HEAD
 asdasdadasd Test
 NEW TEST
+
 =======
 
 asdasdadasd Test Test Test
